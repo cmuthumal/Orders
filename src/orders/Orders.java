@@ -5,7 +5,7 @@
  */
 package orders;
 
-import view.Reports;
+import view.Login;
 
 /**
  *
@@ -17,8 +17,7 @@ public class Orders {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-//        new Login().setVisible(true);
-        new Reports().setVisible(true);
+        new Login().setVisible(true);
     }
 
 }

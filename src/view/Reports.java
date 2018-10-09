@@ -42,7 +42,7 @@ public class Reports extends javax.swing.JFrame {
     private ArrayList<Customer> custList = null;
     private ArrayList<Report> reportsList = null;
     private String[] custArray;
-    private DefaultTableModel reportTableModel;
+    private DefaultTableModel reportTableModel, printTableModel;
     private SimpleDateFormat dateFormat;
     private Date from, to;
     private double totalCost = 0, totalSellingPrice = 0, netProfit = 0;
@@ -417,7 +417,7 @@ public class Reports extends javax.swing.JFrame {
         }
 
         try {
-            JRTableModelDataSource jrtmds = new JRTableModelDataSource(reportTableModel);
+            JRTableModelDataSource jrtmds = new JRTableModelDataSource(printTableModel);
 
             Map dataSource = new HashMap();
             dataSource.put("details", jrtmds);
@@ -608,6 +608,9 @@ public class Reports extends javax.swing.JFrame {
         netProfit = 0;
 
         if (!reportsList.isEmpty()) {
+            Object[] columnNames = {"noteNo", "model", "price", "invoiceNo", "sellingPrice"};
+            printTableModel = new DefaultTableModel(columnNames, 0);
+
             for (int i = 0; i < reportsList.size(); i++) {
                 Report r = reportsList.get(i);
                 if (profitedOnly) {
@@ -617,6 +620,8 @@ public class Reports extends javax.swing.JFrame {
                         Object[] row = {r.getAddedDate(), getCustomerByID(r.getCustomerID()), r.getModel(), r.getError(),
                             r.getIssuedDate(), r.getWarranty(), r.getCost(), r.getSellingPrice(), r.getTechnician()};
                         reportTableModel.addRow(row);
+                        Object[] printRow = {r.getNoteNo(), r.getModel(), r.getSellingPrice(), "", ""};
+                        printTableModel.addRow(printRow);
                     }
                 } else {
                     totalCost += r.getCost();
@@ -624,6 +629,8 @@ public class Reports extends javax.swing.JFrame {
                     Object[] row = {r.getAddedDate(), getCustomerByID(r.getCustomerID()), r.getModel(), r.getError(),
                         r.getIssuedDate(), r.getWarranty(), r.getCost(), r.getSellingPrice(), r.getTechnician()};
                     reportTableModel.addRow(row);
+                    Object[] printRow = {r.getNoteNo(), r.getModel(), r.getSellingPrice(), "", ""};
+                    printTableModel.addRow(printRow);
                 }
             }
         }
