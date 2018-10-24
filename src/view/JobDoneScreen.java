@@ -10,6 +10,7 @@ import controller.CustomerController;
 import controller.ItemTypeController;
 import controller.JobController;
 import controller.JobDoneController;
+import controller.ShopController;
 import controller.TechnicianController;
 import extra.Extra;
 import extra.LengthRestrictedDocument;
@@ -17,6 +18,8 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ButtonGroup;
@@ -25,7 +28,15 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.Job;
 import model.JobDone;
+import model.Shop;
 import model.Technician;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.data.JRTableModelDataSource;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -84,6 +95,7 @@ public class JobDoneScreen extends javax.swing.JFrame {
         tablePanel = new javax.swing.JPanel();
         tableScrollPane = new javax.swing.JScrollPane();
         table = new javax.swing.JTable();
+        printButton = new javax.swing.JButton();
         detailsPanel = new javax.swing.JPanel();
         detailsLeftPanel = new javax.swing.JPanel();
         addedDateTextField = new javax.swing.JTextField();
@@ -212,7 +224,7 @@ public class JobDoneScreen extends javax.swing.JFrame {
                 java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, true, false, false, false, false
+                false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -231,13 +243,25 @@ public class JobDoneScreen extends javax.swing.JFrame {
         });
         tableScrollPane.setViewportView(table);
 
+        printButton.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        printButton.setText("Print");
+        printButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                printButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout tablePanelLayout = new javax.swing.GroupLayout(tablePanel);
         tablePanel.setLayout(tablePanelLayout);
         tablePanelLayout.setHorizontalGroup(
             tablePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(tablePanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(tableScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 660, Short.MAX_VALUE)
+                .addGroup(tablePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(tableScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 660, Short.MAX_VALUE)
+                    .addGroup(tablePanelLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(printButton, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         tablePanelLayout.setVerticalGroup(
@@ -245,6 +269,8 @@ public class JobDoneScreen extends javax.swing.JFrame {
             .addGroup(tablePanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(tableScrollPane)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(printButton, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -862,6 +888,39 @@ public class JobDoneScreen extends javax.swing.JFrame {
         techniciansCombo.setSelectedIndex(techniciansList.size() - 1);
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void printButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_printButtonActionPerformed
+        Shop shop = null;
+
+        try {
+            shop = new ShopController().getShopDetails();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Reports.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(Reports.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        try {
+            JRTableModelDataSource jrtmds = new JRTableModelDataSource(jobTableModel);
+
+            Map dataSource = new HashMap();
+            dataSource.put("details", jrtmds);
+            String d = dateFormat.format(new Date());
+
+            Map param = new HashMap();
+            param.put("name", shop.getShopName());
+            param.put("address", shop.getShopAddress());
+            param.put("contact", shop.getContact());
+            param.put("date", d);
+
+            JasperReport jr = JasperCompileManager.compileReport("./src/report/ToDoList.jrxml");
+            JasperPrint jp = JasperFillManager.fillReport(jr, param, jrtmds);
+            JasperViewer.viewReport(jp, false);
+        } catch (JRException ex) {
+            Logger.getLogger(Reports.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, "Report generation failed.");
+        }
+    }//GEN-LAST:event_printButtonActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -936,6 +995,7 @@ public class JobDoneScreen extends javax.swing.JFrame {
     private javax.swing.JTextField noteNumberTextField;
     private javax.swing.JTextArea notesTextArea;
     private javax.swing.JPanel pricesPanel;
+    private javax.swing.JButton printButton;
     private javax.swing.JTextField remarksTextField;
     private javax.swing.JButton reportsButton;
     private javax.swing.JButton saveButton;

@@ -407,7 +407,7 @@ public class AddItem extends javax.swing.JFrame {
         if (!noteNo.equals("") && (new Extra().validateText(noteNo))) {
             noteNoSet = true;
         }
-        if (!model.equals("") && (new Extra().validateText(model))) {
+        if (!model.equals("")) {
             modelSet = true;
         }
         if (!errorDesc.equals("") && (new Extra().validateText(errorDesc))) {
