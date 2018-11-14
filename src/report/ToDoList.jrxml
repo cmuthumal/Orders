@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="2.0"/>
-	<property name="ireport.x" value="16"/>
+	<property name="ireport.x" value="14"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="name" class="java.lang.String"/>
 	<parameter name="address" class="java.lang.String"/>
 	<parameter name="contact" class="java.lang.String"/>
 	<parameter name="date" class="java.lang.String"/>
-	<field name="noteNo" class="java.lang.String"/>
-	<field name="addedDate" class="java.lang.String"/>
-	<field name="brand" class="java.lang.String"/>
-	<field name="model" class="java.lang.String"/>
-	<field name="error" class="java.lang.String"/>
-	<field name="customer" class="java.lang.String"/>
+	<field name="Note No" class="java.lang.String"/>
+	<field name="Added Date" class="java.lang.String"/>
+	<field name="Brand" class="java.lang.String"/>
+	<field name="Model" class="java.lang.String"/>
+	<field name="Error" class="java.lang.String"/>
+	<field name="Customer" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -47,47 +47,66 @@
 	<pageHeader>
 		<band height="27" splitType="Stretch">
 			<textField>
-				<reportElement x="0" y="0" width="555" height="20"/>
+				<reportElement x="275" y="0" width="88" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="12" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[To-Do List at $P{date}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{date}]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement x="0" y="24" width="555" height="1"/>
 			</line>
+			<staticText>
+				<reportElement x="184" y="0" width="91" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[To-Do List as at]]></text>
+			</staticText>
 		</band>
 	</pageHeader>
 	<columnHeader>
 		<band height="21" splitType="Stretch">
 			<staticText>
 				<reportElement x="5" y="0" width="72" height="20"/>
-				<textElement verticalAlignment="Middle"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
 				<text><![CDATA[Note No]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="145" y="1" width="85" height="20"/>
-				<textElement verticalAlignment="Middle"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
 				<text><![CDATA[Brand]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="230" y="0" width="83" height="20"/>
-				<textElement verticalAlignment="Middle"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
 				<text><![CDATA[Model]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="313" y="0" width="147" height="20"/>
-				<textElement verticalAlignment="Middle"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
 				<text><![CDATA[Error]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="460" y="0" width="92" height="20"/>
-				<textElement verticalAlignment="Middle"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
 				<text><![CDATA[Customer]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="77" y="0" width="68" height="20"/>
-				<textElement verticalAlignment="Middle"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
 				<text><![CDATA[Added Date]]></text>
 			</staticText>
 		</band>
@@ -95,34 +114,34 @@
 	<detail>
 		<band height="21" splitType="Stretch">
 			<textField>
-				<reportElement x="5" y="0" width="72" height="20"/>
+				<reportElement x="5" y="1" width="72" height="19"/>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{noteNo}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{Note No}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="145" y="1" width="85" height="20"/>
+				<reportElement x="77" y="1" width="68" height="19"/>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{brand}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{Added Date}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="230" y="0" width="83" height="20"/>
+				<reportElement x="145" y="1" width="85" height="19"/>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{model}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{Brand}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="313" y="0" width="147" height="20"/>
+				<reportElement x="230" y="1" width="83" height="19"/>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{error}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{Model}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="460" y="0" width="92" height="20"/>
+				<reportElement x="313" y="1" width="147" height="19"/>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{customer}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{Error}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="77" y="1" width="68" height="20"/>
+				<reportElement x="460" y="1" width="92" height="19"/>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{addedDate}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{Customer}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
